@@ -1,0 +1,114 @@
+---
+title: "TJohnson_CaseStudy2"
+author: "Terry Johnson"
+date: "7/21/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Case Study 2 data
+```{r casestudy2.2.a, include=TRUE}
+### 2. Clean your Raw Data
+### 2.a	Read the csv into R and take a look at the data set.Output how many rows and columns the data.frame is.
+
+### Install package to read an Excel file
+library(readxl)
+### Read in the attrition data using the read_excel function
+#attrition <- read_excel("/Users/stevencocke/Downloads/CaseStudy2/CaseStudy2-data.xlsx")
+attrition <- read_excel("/Users/giovanni/Desktop/SMU MSDS/Summer 2018/DoingDataScience/CaseStudy2/Data/CaseStudy2-data.xlsx")
+### Check to make sure it is a dataframe
+class(attrition)
+
+### Look at the top lines
+head(attrition,10)
+
+### Look at the bottom lines
+tail(attrition,10)
+
+### Output the number of rows and columns in the data.frame, as well as datatypes
+str(attrition)
+```
+
+
+```{r casestudy2.2.b, include=TRUE}
+### 2.b.	The column names are either too much or not enough. Change the column names so that they do not have spaces, 
+### underscores, slashes, and the like. All column names should be under 12 characters. 
+### Make sure you’re updating your codebook with information on the tidied data set as well.
+
+### Change the column names to be under 12 characters and remove any symbols
+colnames(attrition) <- c("Age", "Attrition", "BusTravel", "DailyRate", "Dept", "DistFrHme", "Education", "EducField", "EmplCnt", "EmplNum", "EnvirSatisf", "Gender", "HourlyRate", "JobInvl", "JobLvl", "JobRole", "JobSatisf", "MaritStat", "MonthlyInc", "MonthlyRte", "NumCompWrk", "Over18", "Overtime", "PercSalHike", "PerfRate", "RelatSatisf", "StnrdHrs", "StkOptLvl", "TtlWrkYrs", "TrnTmLstYr", "WrkLfBal", "YrsatComp", "YrsinCurRle", "YrsLstPromo", "YrsCurrMang")
+
+```
+
+```{r casestudy2.2.c, include=TRUE}
+### 2.c	Some columns are, due to Qualtrics, malfunctioning.  
+```
+
+
+```{r casestudy2.2.d, include=TRUE}
+### d	Make sure your columns are the proper data types (i.e., numeric, character, etc.).  If they are incorrect, convert them. Verify the column data etypes
+str(attrition)
+```
+
+
+```{r casestudy2.3.a, include=TRUE}
+### 3.a	Remove all observations where the participant is under age 18.  No further analysis of underage individuals is permitted by your client.  Remove any other age outliers as you see fit, but be sure to tell what you’re doing and why.
+library(dplyr)
+over18_attrit <- attrition %>% filter(Over18 == "Y")
+head(over18_attrit)
+tail(over18_attrit)
+#over18_attrit$Over18
+
+#attrition$Over18
+```
+
+```{r casestudy2.3.b, include=TRUE}
+### 3.b	Please provide (in table format or similar), descriptive statistics on at least 7 variables (age, Income, etc.).  Create a simple histogram for two of them.  Comment on the shape of the distribution in your markdown.
+#sapply(attrition$MonthlyInc, mean, na.rm=TRUE)
+attritYES <- attrition %>% filter( Attrition == "Yes")
+attritNO  <- attrition %>% filter( Attrition == "No")
+
+summary(attrition$MonthlyInc)
+summary(attrition$Age)
+summary(attrition$Education)
+summary(attrition$YrsinCurRle)
+summary(attrition$DistFrHme)
+summary(attrition$JobLvl)
+summary(attrition$PercSalHike)
+
+hist(attritYES$PerfRate)
+hist(attritNO$PerfRate)
+hist(attritYES$RelatSatisf)
+hist(attritNO$RelatSatisf)
+hist(attritYES$WrkLfBal)
+hist(attritNO$WrkLfBal)
+hist(attritYES$Education)
+hist(attritNO$Education)
+legend("topright", inset=0.0, legend=c("1-Below College","2-College","3-Bachelor","4-Master","5-Doctor"))
+hist(attritYES$EnvirSatisf)
+hist(attritNO$EnvirSatisf)
+hist(attritYES$JobInvl)
+hist(attritNO$JobInvl)
+hist(attritYES$JobSatisf)
+hist(attritNO$JobSatisf)
+```
+
+```{r casestudy2.3.c, include=TRUE}
+### 3.c	Give the frequencies (in table format or similar) for Gender, Education, and Occupation.  They can be separate tables, if that’s your choice.
+genderCount <- data.frame(attrition %>% group_by(Gender) %>% summarise(n = n())) 
+genderCount
+EducCount <- data.frame(attrition %>% group_by(Education) %>% summarise(n = n())) 
+EducCount
+OccupCount <- data.frame(attrition %>% group_by(JobRole) %>% summarise(n = n())) 
+OccupCount
+```
+
+```{r casestudy2.3.d, include=TRUE}
+### 3.d	Give the counts (again, table) of management positions.
+OccupCount <- data.frame(attrition %>% group_by(JobRole) %>% summarise(n = n())) 
+OccupCount[4:6,]
+```
+
