@@ -118,6 +118,8 @@ OccupCount[4:6,]
 ```
 
 ```{r}
+
+library(ggplot2)
 ###4.a. Make everything visually appealing
 
 ###4.b.	Create bar charts in ggplot or similar. The bars should be in descending order, Use any color palette of your choice other than the default.
@@ -131,9 +133,75 @@ graph1 + geom_point(mapping = aes(x=Age, y=MonthlyInc, color=Gender)) +xlab("Age
 
 graph1 + geom_bar(mapping = aes(x=JobRole, y=MonthlyInc, fill=Gender), stat="identity", position = "dodge") +xlab("Job Role") + ylab("MonthlyIncome") + ggtitle ("Monthly Income by Job Role") + theme(text = element_text(size=5),axis.text.x = element_text(angle=90, hjust=1))
 
+### utilize the objects filtered on attrition variable to run summary stats and the compare.
+summary(attritYES)
+summary(attritNO)
+statAge <- (mean(attrition$Age)-mean(attritYES$Age))/mean(attrition$Age)
+statAge1 <- (median(attrition$Age)-median(attritYES$Age))/median.default(attrition$Age)
+statdis <- (mean(attrition$DistFrHme)-mean(attritYES$DistFrHme))/mean(attrition$DistFrHme)
+statdis1 <- (median(attrition$DistFrHme)-median(attritYES$DistFrHme))/median.default(attrition$DistFrHme)
+statenv <- (mean(attrition$EnvirSatisf)-mean(attritYES$EnvirSatisf))/mean(attrition$EnvirSatisf)
+statenv1 <- (median(attrition$EnvirSatisf)-median(attritYES$EnvirSatisf))/median.default(attrition$EnvirSatisf)
+statjbl <- (mean(attrition$JobLvl)-mean(attritYES$JobLvl))/mean(attrition$JobLvl)
+statjbl1 <- (median(attrition$JobLvl)-median(attritYES$JobLvl))/median.default(attrition$JobLvl)
+statinc <- (mean(attrition$MonthlyInc)-mean(attritYES$MonthlyInc))/mean(attrition$MonthlyInc)
+statinc1 <- (median(attrition$MonthlyInc)-median(attritYES$MonthlyInc))/median.default(attrition$MonthlyInc)
+statcwk <- (mean(attrition$NumCompWrk)-mean(attritYES$NumCompWrk))/mean(attrition$NumCompWrk)
+statcwk1 <- (median(attrition$NumCompWrk)-median(attritYES$NumCompWrk))/median.default(attrition$NumCompWrk)
+statwky <- (mean(attrition$TtlWrkYrs)-mean(attritYES$TtlWrkYrs))/mean(attrition$TtlWrkYrs)
+statwky1 <- (median(attrition$TtlWrkYrs)-median(attritYES$TtlWrkYrs))/median.default(attrition$TtlWrkYrs)
+statatco <- (mean(attrition$YrsatComp)-mean(attritYES$YrsatComp))/mean(attrition$YrsatComp)
+statatco1 <- (median(attrition$YrsatComp)-median(attritYES$YrsatComp))/median(attrition$YrsatComp)
+
+###Given the comparison of results, will further filter using working years (based on approx median of total sample).  
+attritYESSenior <- attritYES %>% filter( TtlWrkYrs >= 11)
+attritYESJunior  <- attritYES %>% filter( TtlWrkYrs <= 11)
+summary(attritYESJunior)
+summary(attritYESSenior)
+SstatAge <- (mean(attrition$Age)-mean(attritYESSenior$Age))/mean(attrition$Age)
+SstatAge1 <- (median(attrition$Age)-median(attritYESSenior$Age))/median.default(attrition$Age)
+Sstatdis <- (mean(attrition$DistFrHme)-mean(attritYESSenior$DistFrHme))/mean(attrition$DistFrHme)
+Sstatdis1 <- (median(attrition$DistFrHme)-median(attritYESSenior$DistFrHme))/median.default(attrition$DistFrHme)
+Sstatenv <- (mean(attrition$EnvirSatisf)-mean(attritYESSenior$EnvirSatisf))/mean(attrition$EnvirSatisf)
+Sstatenv1 <- (median(attrition$EnvirSatisf)-median(attritYESSenior$EnvirSatisf))/median.default(attrition$EnvirSatisf)
+Sstatjbl <- (mean(attrition$JobLvl)-mean(attritYESSenior$JobLvl))/mean(attrition$JobLvl)
+Sstatjbl1 <- (median(attrition$JobLvl)-median(attritYESSenior$JobLvl))/median.default(attrition$JobLvl)
+Sstatinc <- (mean(attrition$MonthlyInc)-mean(attritYESSenior$MonthlyInc))/mean(attrition$MonthlyInc)
+Sstatinc1 <- (median(attrition$MonthlyInc)-median(attritYESSenior$MonthlyInc))/median.default(attrition$MonthlyInc)
+Sstatcwk <- (mean(attrition$NumCompWrk)-mean(attritYESSenior$NumCompWrk))/mean(attrition$NumCompWrk)
+Sstatcwk1 <- (median(attrition$NumCompWrk)-median(attritYESSenior$NumCompWrk))/median.default(attrition$NumCompWrk)
+Sstatwky <- (mean(attrition$TtlWrkYrs)-mean(attritYESSenior$TtlWrkYrs))/mean(attrition$TtlWrkYrs)
+Sstatwky1 <- (median(attrition$TtlWrkYrs)-median(attritYESSenior$TtlWrkYrs))/median.default(attrition$TtlWrkYrs)
+Sstatatco <- (mean(attrition$YrsatComp)-mean(attritYESSenior$YrsatComp))/mean(attrition$YrsatComp)
+Sstatatco1 <- (median(attrition$YrsatComp)-median(attritYESSenior$YrsatComp))/median(attrition$YrsatComp)
+
+JstatAge <- (mean(attrition$Age)-mean(attritYESJunior$Age))/mean(attrition$Age)
+JstatAge1 <- (median(attrition$Age)-median(attritYESJunior$Age))/median.default(attrition$Age)
+Jstatdis <- (mean(attrition$DistFrHme)-mean(attritYESJunior$DistFrHme))/mean(attrition$DistFrHme)
+Jstatdis1 <- (median(attrition$DistFrHme)-median(attritYESJunior$DistFrHme))/median.default(attrition$DistFrHme)
+Jstatenv <- (mean(attrition$EnvirSatisf)-mean(attritYESJunior$EnvirSatisf))/mean(attrition$EnvirSatisf)
+Jstatenv1 <- (median(attrition$EnvirSatisf)-median(attritYESJunior$EnvirSatisf))/median.default(attrition$EnvirSatisf)
+Jstatjbl <- (mean(attrition$JobLvl)-mean(attritYESJunior$JobLvl))/mean(attrition$JobLvl)
+Jstatjbl1 <- (median(attrition$JobLvl)-median(attritYESJunior$JobLvl))/median.default(attrition$JobLvl)
+Jstatinc <- (mean(attrition$MonthlyInc)-mean(attritYESJunior$MonthlyInc))/mean(attrition$MonthlyInc)
+Jstatinc1 <- (median(attrition$MonthlyInc)-median(attritYESJunior$MonthlyInc))/median.default(attrition$MonthlyInc)
+Jstatcwk <- (mean(attrition$NumCompWrk)-mean(attritYESJunior$NumCompWrk))/mean(attrition$NumCompWrk)
+Jstatcwk1 <- (median(attrition$NumCompWrk)-median(attritYESJunior$NumCompWrk))/median.default(attrition$NumCompWrk)
+Jstatwky <- (mean(attrition$TtlWrkYrs)-mean(attritYESJunior$TtlWrkYrs))/mean(attrition$TtlWrkYrs)
+Jstatwky1 <- (median(attrition$TtlWrkYrs)-median(attritYESJunior$TtlWrkYrs))/median.default(attrition$TtlWrkYrs)
+Jstatatco <- (mean(attrition$YrsatComp)-mean(attritYESJunior$YrsatComp))/mean(attrition$YrsatComp)
+Jstatatco1 <- (median(attrition$YrsatComp)-median(attritYESJunior$YrsatComp))/median(attrition$YrsatComp)
+
+### Consider counts for the "YES" group for the gender and Job Role variables to see if these number sku from the larger sample.
+
+genderCount <- data.frame(attritYES %>% group_by(Gender) %>% summarise(n = n())) 
+genderCount
+OccupCount <- data.frame(attritYES %>% group_by(JobRole) %>% summarise(n = n())) 
+OccupCount
+
 
 ###4.d.  What about Life Satisfaction?  Create another scatterplot.  Is there a discernible relationship there to what?   
-
+####still working on this
 
 ```
 
