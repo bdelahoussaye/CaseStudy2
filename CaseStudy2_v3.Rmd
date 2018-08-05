@@ -199,15 +199,29 @@ genderCount
 OccupCount <- data.frame(attritYES %>% group_by(JobRole) %>% summarise(n = n())) 
 OccupCount
 
+###Some other plotting ideas based on specific job roles
+
+### Monthly Income & attrition & job role
+graph1 + geom_bar(mapping = aes(x=JobRole, y=MonthlyInc, fill=Attrition), stat="identity", position = "dodge") +xlab("Job Role") + ylab("MonthlyIncome") + ggtitle ("Monthly Income by Job Role") + theme(text = element_text(size=5),axis.text.x = element_text(angle=90, hjust=1))
+
+### Environment Satisfactiona and Monthly Income and Attrition
+graph1 + geom_point(mapping = aes(x=EnvirSatisf, y=MonthlyInc, color=Attrition)) +xlab("Environment Satisfaction") + ylab("MonthlyIncome") + ggtitle ("Relationship Between Environment and Monthly Income") + geom_smooth(method = "lm", mapping = aes(x=EnvirSatisf, y=MonthlyInc))
+
 
 ###4.d.  What about Life Satisfaction?  Create another scatterplot.  Is there a discernible relationship there to what?   
-####still working on this
-
+hist(attrition$JobSatisf)
+hist(attritYES$JobSatisf)
+hist(attrition$RelatSatisf)
+hist(attritYES$RelatSatisf)
+hist(attrition$EnvirSatisf)
+hist(attritYES$RelatSatisf)
+hist(attritYESSenior$EnvirSatisf)
+hist(attritYESJunior$JobSatisf)
+hist(attritYESJunior$RelatSatisf)
+hist(attritYESJunior$EnvirSatisf)
+hist(attritYESSenior$JobSatisf)
+hist(attritYESSenior$RelatSatisf)
 ```
 
 
-
-
-
-, 
 
