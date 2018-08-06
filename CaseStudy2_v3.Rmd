@@ -84,6 +84,8 @@ hist(attrition$MonthlyInc)
 
 ###We can observe that the distribution for age looks slightly normal albeit it skews slightly to the left.  This implies that the workforce is generally middle aged.  The distribution for Monthly Income skews to the left implying that most of the employees are on the lower end of the pay scale.  The employee data represents an organization that is pyramid shaped (in terms of salary compensation)
 
+###ran additional histograms for observational purposes only, but did not necessariy rely upon the histograms that follow for any provided guidance.
+
 hist(attritYES$PerfRate)
 hist(attritNO$PerfRate)
 hist(attritYES$RelatSatisf)
@@ -205,8 +207,14 @@ OccupCount
 graph1 + geom_bar(mapping = aes(x=JobRole, y=MonthlyInc, fill=Attrition), stat="identity", position = "dodge") +xlab("Job Role") + ylab("MonthlyIncome") + ggtitle ("Monthly Income by Job Role") + theme(text = element_text(size=5),axis.text.x = element_text(angle=90, hjust=1))
 
 ### Environment Satisfactiona and Monthly Income and Attrition
-graph1 + geom_point(mapping = aes(x=EnvirSatisf, y=MonthlyInc, color=Attrition)) +xlab("Environment Satisfaction") + ylab("MonthlyIncome") + ggtitle ("Relationship Between Environment and Monthly Income") + geom_smooth(method = "lm", mapping = aes(x=EnvirSatisf, y=MonthlyInc))
+graph1 + geom_point(mapping = aes(x=EnvirSatisf, y=MonthlyInc, color=Attrition)) +xlab("Environment Satisfaction") + ylab("MonthlyIncome") + ggtitle ("Relationship Between Environment and Monthly Income") 
 
+###Consider the monthly income by level of education by job role for the "Yes" attrition group
+graph2 <- ggplot(attritYES)
+
+graph2 + geom_bar(mapping = aes(x=JobRole, y=MonthlyInc, fill=Education), stat="identity", position = "dodge") +xlab("Job Role") + ylab("MonthlyIncome") + ggtitle ("For Yes Monthly Income by Job Role by Education") + theme(text = element_text(size=5),axis.text.x = element_text(angle=90, hjust=1))
+
+graph1 + geom_bar(mapping = aes(x=JobRole, y=MonthlyInc, fill=Education), stat="identity", position = "dodge") +xlab("Job Role") + ylab("MonthlyIncome") + ggtitle ("For Total Monthly Income by Job Role by Education") + theme(text = element_text(size=5),axis.text.x = element_text(angle=90, hjust=1))
 
 ###4.d.  What about Life Satisfaction?  Create another scatterplot.  Is there a discernible relationship there to what?   
 hist(attrition$JobSatisf)
