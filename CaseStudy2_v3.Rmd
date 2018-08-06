@@ -37,7 +37,7 @@ str(attrition)
 ```{r casestudy2.2.b, include=TRUE}
 ### 2.b.	The column names are either too much or not enough. Change the column names so that they do not have spaces, 
 ### underscores, slashes, and the like. All column names should be under 12 characters. 
-### Make sure you’re updating your codebook with information on the tidied data set as well.
+### Make sure you’re updating your codebook with all information on the tidied data set as well.
 
 ### Change the column names to be under 12 characters and remove any symbols
 colnames(attrition) <- c("Age", "Attrition", "BusTravel", "DailyRate", "Dept", "DistFrHme", "Education", "EducField", "EmplCnt", "EmplNum", "EnvirSatisf", "Gender", "HourlyRate", "JobInvl", "JobLvl", "JobRole", "JobSatisf", "MaritStat", "MonthlyInc", "MonthlyRte", "NumCompWrk", "Over18", "Overtime", "PercSalHike", "PerfRate", "RelatSatisf", "StnrdHrs", "StkOptLvl", "TtlWrkYrs", "TrnTmLstYr", "WrkLfBal", "YrsatComp", "YrsinCurRle", "YrsLstPromo", "YrsCurrMang")
