@@ -18,8 +18,10 @@ knitr::opts_chunk$set(echo = TRUE)
 library(readxl)
 ### Read in the attrition data using the read_excel function
 #attrition <- read_excel("/Users/stevencocke/Downloads/CaseStudy2/CaseStudy2-data.xlsx")
-setwd("C:/Users/brndn/OneDrive/Documents/Github/")
-attrition <- read_excel("Case_Study2/CaseStudy2-data.xlsx")
+#setwd("C:/Users/brndn/OneDrive/Documents/Github/")
+#attrition <- read_excel("Case_Study2/CaseStudy2-data.xlsx")
+setwd("/Users/giovanni/")
+attrition <- read_excel("CaseStudy2/CaseStudy2-data.xlsx")
 ### Check to make sure it is a dataframe
 class(attrition)
 
@@ -45,7 +47,7 @@ colnames(attrition) <- c("Age", "Attrition", "BusTravel", "DailyRate", "Dept", "
 ```
 
 ```{r casestudy2.2.c, include=TRUE}
-### 2.c	Some columns are, due to Qualtrics, malfunctioning.  
+### 2.c	Some columns are, due to Qualtrics, malfunctioning.     
 ```
 
 
@@ -68,7 +70,7 @@ tail(over18_attrit)
 
 ```{r casestudy2.3.b, include=TRUE}
 ### 3.b	Please provide (in table format or similar), descriptive statistics on at least 7 variables (age, Income, etc.).  Create a simple histogram for two of them.  Comment on the shape of the distribution in your markdown.
-#sapply(attrition$MonthlyInc, mean, na.rm=TRUE)
+#sapply(attrition$MonthlyInc, mean, na.rm=TRUE)  
 attritYES <- attrition %>% filter( Attrition == "Yes")
 attritNO  <- attrition %>% filter( Attrition == "No")
 
@@ -84,7 +86,7 @@ hist(attrition$MonthlyInc)
 
 ###We can observe that the distribution for age looks slightly normal albeit it skews slightly to the left.  This implies that the workforce is generally middle aged.  The distribution for Monthly Income skews to the left implying that most of the employees are on the lower end of the pay scale.  The employee data represents an organization that is pyramid shaped (in terms of salary compensation)
 
-###ran additional histograms for observational purposes only, but did not necessariy rely upon the histograms that follow for any provided guidance.
+### ran additional histograms for observational purposes only, but did not necessariy rely upon the histograms that follow for any provided guidance.
 
 hist(attritYES$PerfRate)
 hist(attritNO$PerfRate)
@@ -122,12 +124,12 @@ OccupCount[4:6,]
 ```{r}
 
 library(ggplot2)
-###4.a. Make everything visually appealing
+### 4.a. Make everything visually appealing
 
-###4.b.	Create bar charts in ggplot or similar. The bars should be in descending order, Use any color palette of your choice other than the default.
+### 4.b.	Create bar charts in ggplot or similar. The bars should be in descending order, Use any color palette of your choice other than the default.
 
 
-###4.c.	Is there a relationship between Age and Income?  Create a scatterplot and make an assessment of whether there is a relationship.  Color each point based on the Gender of the participant.  You’re welcome to use lm() or similar functions to back up your claims.
+### 4.c.	Is there a relationship between Age and Income?  Create a scatterplot and make an assessment of whether there is a relationship.  Color each point based on the Gender of the participant.  You’re welcome to use lm() or similar functions to back up your claims.
 graph1 <- ggplot(attrition)
 graph1 + geom_point(mapping = aes(x=Age, y=MonthlyInc, color=Gender)) +xlab("Age") + ylab("MonthlyIncome") + ggtitle ("Relationship Between Age and Monthly Income") + geom_smooth(method = "lm", mapping = aes(x=Age, y=MonthlyInc))
 
@@ -155,7 +157,7 @@ statwky1 <- (median(attrition$TtlWrkYrs)-median(attritYES$TtlWrkYrs))/median.def
 statatco <- (mean(attrition$YrsatComp)-mean(attritYES$YrsatComp))/mean(attrition$YrsatComp)
 statatco1 <- (median(attrition$YrsatComp)-median(attritYES$YrsatComp))/median(attrition$YrsatComp)
 
-###Given the comparison of results, will further filter using working years (based on approx median of total sample).  
+### Given the comparison of results, will further filter using working years (based on approx median of total sample).  
 attritYESSenior <- attritYES %>% filter( TtlWrkYrs >= 11)
 attritYESJunior  <- attritYES %>% filter( TtlWrkYrs <= 11)
 summary(attritYESJunior)
@@ -201,7 +203,7 @@ genderCount
 OccupCount <- data.frame(attritYES %>% group_by(JobRole) %>% summarise(n = n())) 
 OccupCount
 
-###Some other plotting ideas based on specific job roles
+### Some other plotting ideas based on specific job roles
 
 ### Monthly Income & attrition & job role
 graph1 + geom_bar(mapping = aes(x=JobRole, y=MonthlyInc, fill=Attrition), stat="identity", position = "dodge") +xlab("Job Role") + ylab("MonthlyIncome") + ggtitle ("Monthly Income by Job Role") + theme(text = element_text(size=5),axis.text.x = element_text(angle=90, hjust=1))
@@ -228,7 +230,7 @@ hist(attritYESJunior$JobSatisf)
 hist(attritYESJunior$RelatSatisf)
 hist(attritYESJunior$EnvirSatisf)
 hist(attritYESSenior$JobSatisf)
-hist(attritYESSenior$RelatSatisf)
+hist(attritYESSenior$RelatSatisf)  
 ```
 
 
